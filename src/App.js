@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
+import "./App.css";
+import Counter from "./Counter";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <div>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+          </ul>
+          <hr />
+          <Switch>
+            <Route exact path="/" component={Counter} />
+            <Route path="/about">
+              <h1>about</h1>
+            </Route>
+            <Route path="/dashboard">
+              <h1>dashboard </h1>
+            </Route>
+            <Route path="/:id" children={<Child/>} />
+          </Switch>
+        </div>
+      </Router>
+    </div>
+  );
+}
+
+const Child = () => {
+  let { id } = useParams();
+
+  return (
+    <div>
+      <h3>ID: {id}</h3>
     </div>
   );
 }
